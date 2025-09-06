@@ -3,7 +3,10 @@ using System;
 class Prep1 {
     static void Main() {
         Console.Write("What is your name? ");
-        string name = Console.ReadLine();
-        Console.WriteLine($"Hello, {name}!");
+    Console.Write("What is your first name? ");
+    string firstName = Console.ReadLine();
+    Console.Write("What is your last name? ");
+    string lastName = Console.ReadLine();
+    Console.WriteLine($"\nYour name is {lastName}, {firstName} {lastName}.");
     }
 }

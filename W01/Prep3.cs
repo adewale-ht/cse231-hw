@@ -2,10 +2,23 @@
 using System;
 class Prep3 {
     static void Main() {
-        int sum = 0;
-        for (int i = 1; i <= 10; i++) {
-            sum += i;
+        string playAgain = "yes";
+        while (playAgain.ToLower() == "yes") {
+            Random randomGenerator = new Random();
+            int magicNumber = randomGenerator.Next(1, 101);
+            int guess = -1;
+            int guessCount = 0;
+            Console.WriteLine("Guess My Number Game!");
+            while (guess != magicNumber) {
+                Console.Write("What is your guess? ");
+                guess = int.Parse(Console.ReadLine());
+                guessCount++;
+                if (guess < magicNumber) Console.WriteLine("Higher");
+                else if (guess > magicNumber) Console.WriteLine("Lower");
+                else Console.WriteLine($"You guessed it in {guessCount} tries!");
+            }
+            Console.Write("Do you want to play again? (yes/no): ");
+            playAgain = Console.ReadLine();
         }
-        Console.WriteLine($"Sum of numbers 1 to 10: {sum}");
     }
 }

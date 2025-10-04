@@ -5,15 +5,7 @@ public class Reference
     private int _verseStart;
     private int _verseEnd;
 
-    public Reference(string book, int chapter, int verse)
-    {
-        _book = book;
-        _chapter = chapter;
-        _verseStart = verse;
-        _verseEnd = verse;
-    }
-
-    public Reference(string book, int chapter, int verseStart, int verseEnd)
+    public Reference(string book, int chapter, int verseStart, int verseEnd = -1)
     {
         _book = book;
         _chapter = chapter;
@@ -23,7 +15,7 @@ public class Reference
 
     public override string ToString()
     {
-        if (_verseStart == _verseEnd)
+        if (_verseEnd == -1 || _verseEnd == _verseStart)
             return $"{_book} {_chapter}:{_verseStart}";
         else
             return $"{_book} {_chapter}:{_verseStart}-{_verseEnd}";

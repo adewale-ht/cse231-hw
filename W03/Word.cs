@@ -9,15 +9,21 @@ public class Word
         _isHidden = false;
     }
 
-    public bool IsHidden => _isHidden;
-
     public void Hide()
     {
         _isHidden = true;
     }
 
-    public string GetDisplayText()
+    public bool IsHidden()
     {
-        return _isHidden ? new string('_', _text.Length) : _text;
+        return _isHidden;
+    }
+
+    public override string ToString()
+    {
+        if (_isHidden)
+            return new string('_', _text.Length);
+        else
+            return _text;
     }
 }

@@ -7,37 +7,43 @@ class Program
 {
     static void Main(string[] args)
     {
-        // Library of scriptures
-        List<Scripture> scriptures = new List<Scripture>
+        // Multiple scripture options
+        var scriptures = new[]
         {
-            new Scripture(new Reference("John", 3, 16), "For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life."),
-            new Scripture(new Reference("Proverbs", 3, 5, 6), "Trust in the Lord with all thine heart; and lean not unto thine own understanding. In all thy ways acknowledge him, and he shall direct thy paths."),
-            new Scripture(new Reference("Psalm", 23, 1), "The Lord is my shepherd; I shall not want."),
+            new { Reference = new Reference("John", 3, 16), Text = "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life." },
+            new { Reference = new Reference("Proverbs", 3, 5, 6), Text = "Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight." },
+            new { Reference = new Reference("Philippians", 4, 13), Text = "I can do all things through Christ which strengtheneth me." }
         };
 
         Console.WriteLine("Choose a scripture to memorize:");
-        for (int i = 0; i < scriptures.Count; i++)
+        for (int i = 0; i < scriptures.Length; i++)
         {
-            Console.WriteLine($"{i + 1}. {scriptures[i].GetDisplayText().Split('\n')[0]}");
+            Console.WriteLine($"{i + 1}. {scriptures[i].Reference}");
         }
         Console.Write("Enter number: ");
         int choice = int.Parse(Console.ReadLine());
-        Scripture scripture = scriptures[choice - 1];
+        var selected = scriptures[Math.Clamp(choice - 1, 0, scriptures.Length - 1)];
 
-        Console.Clear();
+        Scripture scripture = new Scripture(selected.Reference, selected.Text);
+
+        int round = 0;
         while (true)
         {
-            Console.WriteLine(scripture.GetDisplayText());
+            scripture.Display();
             if (scripture.AllWordsHidden())
             {
-                Console.WriteLine("\nAll words are hidden. Good job!");
+                Console.WriteLine($"Congratulations! You memorized the scripture in {round} rounds.");
                 break;
             }
-            Console.WriteLine("\nPress Enter to hide more words or type 'quit' to exit.");
+            Console.WriteLine("Press Enter to hide more words or type 'quit' to finish.");
             string input = Console.ReadLine();
-            if (input.ToLower() == "quit") break;
-            Console.Clear();
-            scripture.HideRandomWords(3);
+            if (input.Trim().ToLower() == "quit")
+            {
+                Console.WriteLine("Goodbye!");
+                break;
+            }
+            scripture.HideRandomWords(3); // Hide 3 words per round
+            round++;
         }
     }
 }
